@@ -11,7 +11,8 @@ const item_statSchema = new mongoose.Schema({
     power: {
         type: Number,
     },
-})
+},
+{ _id: false }); 
 
 //itemInfo 메인 스키마
 const itemInfo = new mongoose.Schema({
