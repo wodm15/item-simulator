@@ -10,12 +10,15 @@ const userInfo = new mongoose.Schema({
   },
   level: {
     type: Number,
+    default: 1,
   },
   health: {
     type: Number,
+    default: 500,
   },
   power: {
     type: Number,
+    default: 500,
   },
 });
 

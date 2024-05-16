@@ -1,7 +1,7 @@
 import express from 'express';
 import connect from './schemas/index.js';
 import UserRouter from './routes/characters.router.js';
-
+import ItemRouter from './routes/items.router.js';
 import ErrorHandlerMiddleware from './middlewares/error-handler.middleware.js';
 
 const app = express();
@@ -22,7 +22,7 @@ router.get('/', (req, res) => {
   return res.json({ message: 'Hi!' });
 });
 
-app.use('/api', router, UserRouter);
+app.use('/api', router, UserRouter , ItemRouter);
 
 // 에러 핸들링 미들웨어를 등록
 app.use(ErrorHandlerMiddleware);
