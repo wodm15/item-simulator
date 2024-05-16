@@ -28,6 +28,37 @@ router.post('/items', async(req, res, next)=>{
     }
 });
 
+//아이템 수정 api (patch 는  리소스의 부분적인 수정을 할 때에 사용)
+router.patch('/items/:item_code', async (req, res, next) => {
+    try {    
+        const { item_code } = req.params;
+        const { item_name, item_stat } = req.body;
+
+        // id 존재여부 확인
+        const checkExist = await Item.findOne({ item_code }).exec();
+        if (checkExist === null) {
+            return res.status(400).json({ message: "아이템 코드가 존재하지 않습니다." });
+        }
+
+        // 업데이트 함수 findByIdAndUpdate 함수 이용
+        const updatedItem = await Item.findOneAndUpdate({ item_code }, { item_name, item_stat }, { new: true });
+        return res.status(201).json(updatedItem);
+    } catch (error) {
+        next(error);
+    }
+});
+
+// 아이템 전체 목록 조회 API
+router.get('/items', async (req, res, next) => {
+    try {
+        //find 함수 {}, {보여주고싶은 것 : 1 , 기본적으로 보여주는 _id 보여주기 싫음 : 0}
+        const getAll = await Item.find({},{item_code: 1 , item_name: 1, _id: 0});
+        return res.status(200).json(getAll);
+    } catch (error) {
+        next(error);
+    }
+});
+
 
 
 export default router;
