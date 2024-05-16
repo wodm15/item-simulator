@@ -58,11 +58,29 @@ router.get('/characters/:character_id', async (req, res, next) => {
     if (!findId) {
       return res.status(400).json({ message: '해당 캐릭터가 없습니다.' });
     }
-    const user = await User.findOne({ _id: findId }).exec();
+    const user = await User.findOne({ _id: findId }, {_id: 0, __v:0, character_id: 0,}).exec();
     return res.status(200).json(user);
   } catch (error) {
     next(error);
   }
 });
+
+//캐릭터 전체 조회 추가
+router.get('/characters/' , async(req,res,next)=>{
+  try{
+  const findAll = await User.find({},{ name: 1, health: 1, power: 1, _id: 0 }).exec();
+  if (findAll===null){
+    return res.status(400).json({message: "생성된 캐릭터가 없습니다"});
+  }
+  const getAll ={
+    name: findAll.name,
+    power: findAll.power,
+    health: findAll.health,
+  }
+  return res.status(201).json(findAll);
+  }catch(error){
+    next(error);
+  }
+})
 
 export default router;
