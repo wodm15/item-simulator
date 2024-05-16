@@ -8,12 +8,16 @@
   "name": "item_simulator",
   "version": "1.0.0",
   "main": "app.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "module",
-  "description": ""
+  "scripts": {
+    "format": "prettier --write *.js **/*.js"
+  },
+  "description": "",
+  "devDependencies": {
+    "prettier": "^3.2.5"
+  }
 }
