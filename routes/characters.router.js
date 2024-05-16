@@ -9,6 +9,12 @@ const router = express.Router();
 router.post('/characters', async(req, res , next)=>{
     try{
         const {name} = await req.body;
+        //중복 아이디 확인 절차
+        const alreadyExist = await User.findOne({name}).exec();
+        if(alreadyExist !==null ){
+            return res.status(400).json({message: '이미 존재하는 닉네임입니다.'})
+        }
+        
         const maxId = await User.findOne().sort('-character_id').exec();
         const character_id = maxId ? maxId.character_id + 1 : 1;
         const user = new User({name, character_id});
@@ -46,7 +52,7 @@ router.get('/characters/:character_id', async(req, res , next)=>{
         const {character_id} = req.params;
         const findId = await User.findOne({character_id}).exec();
         if(!findId){
-            return res.status(400).json({message: "캐릭터 조회에 실패하였습니다."})
+            return res.status(400).json({message: "해당 캐릭터가 없습니다."})
             }
         const user = await User.findOne({_id: findId}).exec();
         return res.status(200).json(user);
