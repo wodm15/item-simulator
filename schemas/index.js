@@ -1,13 +1,14 @@
 // schemas/index.js
-
 import mongoose from 'mongoose';
 
+import dotenv from "dotenv";
 
+dotenv.config();
 
 const connect = () => {
   mongoose
     .connect(
-      'mongodb+srv://user:3061892@mongo.1zjigsy.mongodb.net/?retryWrites=true&w=majority&appName=mongo',
+      process.env.DB_PASS,
       {
         dbName: 'item_memo', // 데이터베이스명 사용
       },
