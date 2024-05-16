@@ -40,10 +40,20 @@ router.delete('/characters/:character_id', async(req, res , next)=>{
     }
 })
 
-// //캐릭터 상세 조회
-// router.get('/characters/:character_id', async(error, req, res , next)=>{
-
-// })
+// 캐릭터 상세 조회
+router.get('/characters/:character_id', async(req, res , next)=>{
+    try{
+        const {character_id} = req.params;
+        const findId = await User.findOne({character_id}).exec();
+        if(!findId){
+            return res.status(400).json({message: "캐릭터 조회에 실패하였습니다."})
+            }
+        const user = await User.findOne({_id: findId}).exec();
+        return res.status(200).json(user);
+        } catch (error){
+            next(error)
+        }
+})
 
 
 
