@@ -69,7 +69,7 @@ router.get('/items/:item_code',async (req, res, next) =>{
 
         //아이디가 없으면?
         if(getItem ===null){
-            res.status(400).json({message: "해당하는 아이템이 없습니다."});
+            return res.status(400).json({message: "해당하는 아이템이 없습니다."});
         }
 
         const response = {
